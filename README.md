@@ -1,4 +1,4 @@
-# get_waifu
+# Get Waifu
 
 A scraper for [mywaifulist.moe](https://mywaifulist.moe). 
 
