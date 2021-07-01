@@ -17,7 +17,6 @@ class MyWaifuListClient {
         'x-xsrf-token': _xsrfToken,
         'x-requested-with': 'XMLHttpRequest',
         'origin': 'https://mywaifulist.moe',
-        'method': 'POST',
         'cookie':
             'XSRF-TOKEN=$_xsrfToken; forever_alone_session=$_foreverAloneSessionToken',
       };

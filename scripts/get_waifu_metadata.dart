@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:get_waifu/my_waifu_list_client.dart';
@@ -22,5 +23,23 @@ void main() async {
   }
 
   await _client.endSession();
+
+  print('Metadata download completed. Combining into a single file...');
+
+  List<dynamic> characters = [];
+  for (var page = 1; page <= _pageCount; page++) {
+    var json = jsonDecode(File('waifu_metadata/$page.json').readAsStringSync());
+    var charList = json['data'] as List<dynamic>;
+    characters.addAll(charList);
+  }
+  var metadataFile = File('data/waifu_metadata.json');
+  if (!metadataFile.existsSync()) {
+    metadataFile.createSync();
+  }
+  metadataFile.writeAsStringSync(jsonEncode({
+    'data': characters
+  }));
+
+  print('Done.');
 }
 
