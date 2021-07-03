@@ -1,0 +1,2 @@
+data/waifu_details.json filter=lfs diff=lfs merge=lfs -text
+data/waifu_metadata.json filter=lfs diff=lfs merge=lfs -text
