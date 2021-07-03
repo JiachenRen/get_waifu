@@ -48,5 +48,6 @@ app.*.map.json
 # Chromium
 .local-chromium/
 
-# Waifu Metadata
+# Raw scraped waifu files
 waifu_metadata/
+waifu_details/

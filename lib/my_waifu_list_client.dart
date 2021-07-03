@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:puppeteer/puppeteer.dart' hide Request;
 
 class MyWaifuListClient {
@@ -10,8 +11,9 @@ class MyWaifuListClient {
   String _xsrfToken;
   String _foreverAloneSessionToken;
   Browser _browser;
+  Dio _dio;
 
-  MyWaifuListClient();
+  MyWaifuListClient(): _dio = Dio();
 
   Map<String, String> get requestHeaders => {
         'x-xsrf-token': _xsrfToken,
@@ -51,6 +53,23 @@ class MyWaifuListClient {
     print('Session Created.');
     print('XSRF-TOKEN: $_xsrfToken');
     print('forever_alone_session: $_foreverAloneSessionToken');
+  }
+
+  /// Fetch details for waifu with given id.
+  ///
+  /// On error, returns error string returned by the server.
+  Future<Map<String, dynamic>> fetchWaifuDetails(int id) {
+    return _dio.get('https://mywaifulist.moe/api/waifu/$id', options: Options(
+      headers: {
+        'x-requested-with': 'XMLHttpRequest'
+      }
+    )).then((res) {
+      if (res.data is String) {
+        print('Waifu with id $id does not exist or unknown error.');
+        return null;
+      }
+      return res.data;
+    });
   }
 
   Future<String> fetchWaifuMetadata(int page) async {
